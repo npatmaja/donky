@@ -1,0 +1,6 @@
+Donky:
+  ☐ Create a simple fixture, without reference, without random
+    generation.
+  ☐ Add random generation
+  ☐ Add reference
+  ☐ Multiple fixture creation

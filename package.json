@@ -1,0 +1,35 @@
+{
+  "name": "donky",
+  "version": "0.0.0",
+  "description": "Another mongoose fixture library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npatmaja/donky.git"
+  },
+  "keywords": [
+    "fixtures",
+    "mongoose",
+    "test",
+    "testing",
+    "mongoodb",
+    "mocha"
+  ],
+  "author": "Nauval Atmaja <nauval.atmaja@gmail.com> (http://nauvalatmaja.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npatmaja/donky/issues"
+  },
+  "homepage": "https://github.com/npatmaja/donky",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-exit": "0.0.2",
+    "gulp-mocha": "^2.1.3",
+    "mocha": "^2.2.5",
+    "sinon": "^1.15.4"
+  }
+}
