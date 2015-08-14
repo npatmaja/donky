@@ -88,6 +88,8 @@ describe('Donky', function() {
   });
 
   describe('#create', function() {
+    var instance;
+
     beforeEach(function(done) {
       donky.factory()
         .schema('User', 'user2')
@@ -96,7 +98,7 @@ describe('Donky', function() {
         .field('isActive', true)
         .field('isAdmin', false);
 
-      donky.create('user2');
+      instance = donky.create('user2');
       done();
     });
 
@@ -130,6 +132,26 @@ describe('Donky', function() {
         .property('user2.isActive', true);
       expect(donky._mongooseInstances).to.have.deep
         .property('user2.isAdmin', false);
+      done();
+    });
+
+    it('returns mongoose instance', function(done) {
+      expect(instance).to.be.ok;
+      expect(instance).to.have.property('save');
+      expect(instance).to.have.property('_id');
+      expect(instance._id).to.be.a('object');
+      expect(instance._id.toString()).to.have
+        .length.of.at.least(24);
+      expect(instance._id.toString()).to.have
+        .length.of.at.most(24);
+      expect(instance).to.have
+        .property('username', 'dummyuser2');
+      expect(instance).to.have
+        .property('email', 'dummyemail2@email.com');
+      expect(instance).to.have
+        .property('isActive', true);
+      expect(instance).to.have
+        .property('isAdmin', false);
       done();
     });
   });
