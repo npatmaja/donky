@@ -14,23 +14,23 @@ var donky = new Donky(mongoose);
 
 donky.factory()
   .schema('User', 'admin')
-  .field('email', donky.gen.email)
-  .field('password', donky.gen.string);
+  .field('email', donky.gen.email())
+  .field('password', donky.gen.string());
 
 donky.factory()
   .schema('User', 'joe')
-  .field('email', donky.gen.email)
-  .field('password', donky.gen.string);
+  .field('email', donky.gen.email())
+  .field('password', donky.gen.string());
 
 donky.factory()
   .schema('Post', 'post1')
   .field('author', 'admin')
-  .field('content', donky.gen.paragraph);
+  .field('content', donky.gen.paragraph());
 
 donky.factory()
   .schema('Post')
   .field('author', 'joe')
-  .field('content', donky.gen.paragraph);
+  .field('content', donky.gen.paragraph());
 
 // create mongoose object
 donky.create('admin');

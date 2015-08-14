@@ -2,5 +2,5 @@ Donky:
   ✔ Create a simple fixture, without reference, without random generation.@done(2015-08-14 16:08) @project(Donky)
   ✔ Add random generation @done(2015-08-14 16:08) @project(Donky)
   ✔ #create should return mongoose instance @done(2015-08-14 16:17) @project(Donky)
-  ☐ Add reference
+  ✔ Add reference @done(2015-08-15 06:29) @project(Donky)
   ☐ Multiple fixture creation
