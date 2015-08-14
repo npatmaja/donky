@@ -116,6 +116,13 @@ describe('Donky', function() {
       expect(donky._mongooseInstances).to.have.any.keys(['user2']);
       expect(donky._mongooseInstances).to.have.deep.property('user2.save');
       expect(donky._mongooseInstances).to.have.deep
+        .property('user2._id');
+      expect(donky._mongooseInstances.user2._id).to.be.a('object');
+      expect(donky._mongooseInstances.user2._id.toString()).to.have
+        .length.of.at.least(24);
+      expect(donky._mongooseInstances.user2._id.toString()).to.have
+        .length.of.at.most(24);
+      expect(donky._mongooseInstances).to.have.deep
         .property('user2.username', 'dummyuser2');
       expect(donky._mongooseInstances).to.have.deep
         .property('user2.email', 'dummyemail2@email.com');
@@ -123,6 +130,28 @@ describe('Donky', function() {
         .property('user2.isActive', true);
       expect(donky._mongooseInstances).to.have.deep
         .property('user2.isAdmin', false);
+      done();
+    });
+  });
+
+  describe('#gen', function(done) {
+    beforeEach(function(done) {
+      donky.factory()
+        .schema('User', 'user2')
+        .field('username', 'dummyuser2')
+        .field('email', 'dummyemail2@email.com')
+        .field('isActive', true)
+        .field('isAdmin', false);
+
+      donky.create('user2');
+      done();
+    });
+
+    it('returns chance generator', function(done) {
+      expect(donky.gen).to.be.ok;
+      expect(donky.gen.name()).to.be.a('string');
+      expect(donky.gen.email()).match(/@/);
+      expect(donky.gen.bool()).to.be.a('boolean');
       done();
     });
   });
