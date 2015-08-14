@@ -5,7 +5,7 @@
 $ npm install donky
 ```
 
-## Usage
+<!-- ## Usage
 
 ```javascript
 var mongoose = require('mongoose');
@@ -34,4 +34,8 @@ donky.factory()
 
 // create mongoose object
 donky.create('admin');
-```
+``` -->
+
+License:
+
+MIT license
