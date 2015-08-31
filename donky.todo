@@ -3,4 +3,5 @@ Donky:
   ✔ Add random generation @done(2015-08-14 16:08) @project(Donky)
   ✔ #create should return mongoose instance @done(2015-08-14 16:17) @project(Donky)
   ✔ Add reference @done(2015-08-15 06:29) @project(Donky)
-  ☐ Multiple fixture creation
+  ✔ Multiple fixture creation @done(2015-08-31 15:36) @project(Donky)
+  ☐ tests for create multiple fixture with reference
