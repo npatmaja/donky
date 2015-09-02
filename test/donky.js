@@ -262,7 +262,7 @@ describe('Donky', function() {
       done();
     });
 
-    describe('when the referred model not instantiated', function(done) {
+    describe('when the referred document is not instantiated', function(done) {
       before(function(done) {
         donky.factory()
           .schema('Post', 'post2')
@@ -279,8 +279,8 @@ describe('Donky', function() {
       });
     });
 
-    describe('when the referred model instantiated', function(done) {
-      it('refers to the right model', function(done) {
+    describe('when the referred document has been instantiated', function(done) {
+      it('refers to the right document', function(done) {
         var userId;
         userPromise.then(function(user) {
           userId = user._id;
@@ -293,7 +293,7 @@ describe('Donky', function() {
     });
   });
 
-  describe('#create multiple', function(done) {
+  describe('#create multiple documents', function(done) {
     beforeEach(function(done) {
       donky.factory()
         .schema('User', 'user1')
@@ -323,7 +323,7 @@ describe('Donky', function() {
         });
       });
 
-      it('creates the correct mongose instance key', function(done) {
+      it('creates the correct document instance key', function(done) {
         var promise = donky.create('user1', 3);
         expect(donky._documentInstances).to.have.property('user1');
         expect(donky._documentInstances).to.have.property('user1#0');
@@ -333,7 +333,7 @@ describe('Donky', function() {
     });
   });
 
-  describe('#create multiple with reference', function() {
+  describe('#create multiple documents with references and sub-documents', function() {
     var userPromise;
     var postPromise;
     var commentsPromise;
