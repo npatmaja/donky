@@ -191,22 +191,22 @@ describe('Donky', function() {
       it('creates mongoose instance', function(done) {
         donky.create('user2')
           .then(function(doc) {
-            expect(donky._mongooseInstances).to.have.any.keys(['user2']);
-            expect(donky._mongooseInstances).to.have.deep.property('user2.save');
-            expect(donky._mongooseInstances).to.have.deep
+            expect(donky._documentInstances).to.have.any.keys(['user2']);
+            expect(donky._documentInstances).to.have.deep.property('user2.save');
+            expect(donky._documentInstances).to.have.deep
               .property('user2._id');
-            expect(donky._mongooseInstances.user2._id).to.be.a('object');
-            expect(donky._mongooseInstances.user2._id.toString()).to.have
+            expect(donky._documentInstances.user2._id).to.be.a('object');
+            expect(donky._documentInstances.user2._id.toString()).to.have
               .length.of.at.least(24);
-            expect(donky._mongooseInstances.user2._id.toString()).to.have
+            expect(donky._documentInstances.user2._id.toString()).to.have
               .length.of.at.most(24);
-            expect(donky._mongooseInstances).to.have.deep
+            expect(donky._documentInstances).to.have.deep
               .property('user2.username', 'dummyuser2');
-            expect(donky._mongooseInstances).to.have.deep
+            expect(donky._documentInstances).to.have.deep
               .property('user2.email', 'dummyemail2@email.com');
-            expect(donky._mongooseInstances).to.have.deep
+            expect(donky._documentInstances).to.have.deep
               .property('user2.isActive', true);
-            expect(donky._mongooseInstances).to.have.deep
+            expect(donky._documentInstances).to.have.deep
               .property('user2.isAdmin', false);
             done();
           }).done();
@@ -325,9 +325,9 @@ describe('Donky', function() {
 
       it('creates the correct mongose instance key', function(done) {
         var promise = donky.create('user1', 3);
-        expect(donky._mongooseInstances).to.have.property('user1');
-        expect(donky._mongooseInstances).to.have.property('user1#0');
-        expect(donky._mongooseInstances).to.have.property('user1#1');
+        expect(donky._documentInstances).to.have.property('user1');
+        expect(donky._documentInstances).to.have.property('user1#0');
+        expect(donky._documentInstances).to.have.property('user1#1');
         done();
       });
     });
@@ -374,9 +374,8 @@ describe('Donky', function() {
 
         return postPromise;
       }).then(function(post) {
-        userId = donky.getInstance('user1')._id;
+        userId = donky.getDocument('user1')._id;
         expect(post.author).to.be.eq(userId);
-
         expect(post.comments).to.have.length(7);
         expect(post.likes).to.have.length(3);
         post.comments.forEach(function(comment) {
