@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 var expect = require('chai').expect;
+var assert = require('assert');
 var sinon = require('sinon');
 var stub = require('./stub');
 var Donky = require('../');
+var _ = require('lodash');
 var donky = new Donky(mongoose);
 
 describe('Donky', function() {
@@ -33,7 +35,11 @@ describe('Donky', function() {
         type:  mongoose.Schema.ObjectId,
         ref: 'User'
       },
-      comments: [CommentSchema]
+      comments: [CommentSchema],
+      likes: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+      }]
     });
 
     mongoose.model('User', UserSchema);
@@ -316,11 +322,72 @@ describe('Donky', function() {
           expectUserMultiple(docs, 3, done);
         });
       });
+
+      it('creates the correct mongose instance key', function(done) {
+        var promise = donky.create('user1', 3);
+        expect(donky._mongooseInstances).to.have.property('user1');
+        expect(donky._mongooseInstances).to.have.property('user1#0');
+        expect(donky._mongooseInstances).to.have.property('user1#1');
+        done();
+      });
     });
   });
 
   describe('#create multiple with reference', function() {
+    var userPromise;
+    var postPromise;
+    var commentsPromise;
 
+    before(function(done) {
+      donky.factory()
+        .schema('User', 'user1')
+        .field('username', donky.gen.name())
+        .field('email', donky.gen.email());
+
+      donky.factory()
+        .schema('Post', 'post1')
+        .field('post', donky.gen.paragraph())
+        .field('author', donky.ref('user1'))
+        .field('comments', donky.embed('comment-post1#'))
+        .field('likes', donky.ref('user1#'));
+
+      donky.factory()
+        .schema('Comment', 'comment-post1')
+        .field('author', donky.gen.twitter())
+        .field('comment', donky.gen.paragraph());
+
+      userPromise = donky.create('user1', 3);
+      commentsPromise = donky.create('comment-post1', 7);
+      postPromise = donky.create('post1');
+
+      done();
+    });
+
+    it('refers to the instance', function(done) {
+      var userId;
+      var commentIds = [];
+
+      commentsPromise.then(function(comments) {
+        comments.forEach(function(comment) {
+          commentIds.push(comment._id);
+        });
+
+        return postPromise;
+      }).then(function(post) {
+        userId = donky.getInstance('user1')._id;
+        expect(post.author).to.be.eq(userId);
+
+        expect(post.comments).to.have.length(7);
+        expect(post.likes).to.have.length(3);
+        post.comments.forEach(function(comment) {
+          expect(_.includes(commentIds, comment._id));
+        });
+
+        done();
+      }).fail(function(err) {
+        done(err);
+      });
+    });
   });
 });
 
