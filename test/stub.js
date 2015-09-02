@@ -1,7 +1,7 @@
 var sinon = require('sinon');
 var mongoose  = require('mongoose');
 
-sinon.stub(mongoose.Model.prototype, 'save', function(cb) {
+var stub = sinon.stub(mongoose.Model.prototype, 'save', function(cb) {
   var _this = this;
 
   this.validate(function(err) {
@@ -12,3 +12,5 @@ sinon.stub(mongoose.Model.prototype, 'save', function(cb) {
     cb(err, _this);
   });
 });
+
+module.exports = stub;
