@@ -1,8 +1,0 @@
---require ./test/stub
---recursive
---bail
---reporter spec
---ui bdd
---growl
---slow 25
---timeout 55
